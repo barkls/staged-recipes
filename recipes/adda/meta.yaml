@@ -1,0 +1,42 @@
+{% set name = "adda" %}
+{% set version = "v1.3b4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/adda-team/{{ name }}/archive/{{ version }}.tar.gz
+  sha256: fb6eb6ac721a0dc97754198daf6c3ff321394e1e2921758b0fda56ee00a40ffa
+
+build:
+  number: 0
+  # If the installation is complex, or different between Unix and Windows, use separate bld.bat and build.sh files instead of this key.
+  # By default, the package will be built for the Python versions supported by conda-forge and for all major OSs.
+  # Add the line "skip: True  # [py<35]" (for example) to limit to Python 3.5 and newer, or "skip: True  # [not win]" to limit to Windows.
+  script: "make seq -C ./src"
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
+    - fftw
+    - mpich  # [not win]
+  run:
+
+test:
+    
+about:
+  home: https://github.com/adda-team/adda/
+  license: GPL-3.0
+  license_file: LICENSE
+  summary: 'open-source parallel implementation of the discrete dipole approximation'
+
+  # The remaining entries in this section are optional, but recommended
+  doc_url: https://github.com/adda-team/adda/wiki
+
+extra:
+  recipe-maintainers:
+    - barkls
+    - myurkin
